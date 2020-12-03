@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <title>First service worker</title>
+
 <h1>Sericer worker test</h1>
 <output></output>
 
@@ -7,21 +8,22 @@
 
 <script>
 
+
+    // Manual service worker update
     function update() {
         if('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistration().then(registration => {
-                console.log(registration)
                 registration.update()
             })
         }
     }
 
+    // Registering the service worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('serviceWorker.js', {
             scope: "/"
         }).then( 
         registration => {
-            console.log(registration)
             const scope = registration.scope
             document.querySelector('output').innerHTML = `Service worker registered properly at ${scope}` 
         }).catch(error => {
@@ -31,16 +33,15 @@
         document.querySelector('output').innerHTML = "Service worker not available"
     }
 
+
+    // Troubleshooting different phases of the service worker
     if ('serviceWorker' in navigator) {
-        console.log('here 2')
         navigator.serviceWorker.getRegistration().
             then(registration => {
-                console.log('yo')
-                registration.addEventListener('updatefound ', e => {
+                registration.addEventListener('updatefound', e => {
                     const swInstalling = registration.installing
-                    console.log('here 1')
                     swInstalling.addEventListener('statechange', ()=> {
-                        if (swInstalling.state === 'installed') {
+                        if (swInstalling.state == 'installed') {
                                 // your logic on installed state, you can inform the user here
                             document.querySelector('output').innerHTML = "a new service worker is installed and waiting"
                         } else {
@@ -48,7 +49,7 @@
                         }
                     })
                 })
-        }).catch(e=> {})
+            }).catch(e=> {})
     }
   
 </script>
