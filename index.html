@@ -5,15 +5,24 @@
 <output></output>
 
 <button onclick="update()">Update check</button>
+<button onclick="unregister()">Unregister</button>
 
 <script>
-
 
     // Manual service worker update
     function update() {
         if('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistration().then(registration => {
                 registration.update()
+            })
+        }
+    }
+
+    // Service worker unregister
+    function unregister() {
+        if('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistration().then(registration => {
+                registration.unregister()
             })
         }
     }
