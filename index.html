@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<title>First service worker</title>
+<h1>Sericer worker test</h1>
+<output></output>
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('serviceWorker.js', {
+            scope: "/"
+        }).then( 
+        registration => {
+            const scope = registration.scope
+            document.querySelector('output').innerHTML = `Service worker registered properly at ${scope}` 
+        }).catch(error => {
+            document.querySelector('output').innerHTML = "Service worker not registered"
+        })
+    } else {
+        document.querySelector('output').innerHTML = "Service worker not available"
+    }
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registration => {
+            registration.addEventListener('updateFound', e => {
+                const swInstalling = registration.installing
+                swInstalling.addEventListener('statechange', ()=> {
+                    if (swInstalling.state == 'installed') {
+
+                    }
+                })
+            })
+        }).catch(e=> {})
+    }
+  
+</script>
